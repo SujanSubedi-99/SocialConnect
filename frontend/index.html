@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialConnect - Connect with Friends</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-share-alt"></i>
+                <span>SocialConnect</span>
+            </div>
+            <div class="nav-search" id="nav-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search users..." id="search-input">
+                <div class="search-results" id="search-results"></div>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-link active" data-page="feed">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-link" data-page="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <button class="btn btn-logout" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login/Register Modal -->
+    <div class="modal" id="auth-modal">
+        <div class="modal-content">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2 id="auth-title">Welcome to SocialConnect</h2>
+                    <p id="auth-subtitle">Connect with friends and share your moments</p>
+                </div>
+
+                <!-- Login Form -->
+                <form class="auth-form" id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">Username or Email</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form class="auth-form hidden" id="register-form">
+                    <div class="form-group">
+                        <label for="register-username">Username</label>
+                        <input type="text" id="register-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-fullname">Full Name</label>
+                        <input type="text" id="register-fullname">
+                    </div>
+                    <div class="form-group">
+                        <label for="register-bio">Bio</label>
+                        <textarea id="register-bio" placeholder="Tell us about yourself"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Register</button>
+                </form>
+
+                <div class="auth-switch">
+                    <p id="auth-switch-text">Don't have an account?</p>
+                    <button class="btn btn-link" id="auth-switch-btn">Sign up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Feed Page -->
+        <div class="page" id="feed-page">
+            <div class="container">
+                <div class="feed-layout">
+                    <!-- Create Post -->
+                    <div class="create-post">
+                        <div class="create-post-header">
+                            <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Your avatar" class="user-avatar" id="create-post-avatar">
+                            <div class="create-post-form">
+                                <textarea placeholder="What's on your mind?" id="post-content"></textarea>
+                                <div class="create-post-actions">
+                                    <div class="post-options">
+                                        <button class="btn btn-icon" id="add-image-btn">
+                                            <i class="fas fa-image"></i>
+                                            <span>Photo</span>
+                                        </button>
+                                        <input type="url" placeholder="Image URL (optional)" id="post-image-url" class="hidden">
+                                    </div>
+                                    <button class="btn btn-primary" id="post-submit">Post</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Posts Feed -->
+                    <div class="posts-container" id="posts-container">
+                        <div class="loading" id="posts-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Loading posts...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div class="page hidden" id="profile-page">
+            <div class="container">
+                <div class="profile-layout">
+                    <div class="profile-header">
+                        <div class="profile-cover"></div>
+                        <div class="profile-info">
+                            <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Profile" class="profile-avatar" id="profile-avatar">
+                            <div class="profile-details">
+                                <h2 id="profile-name">Loading...</h2>
+                                <p id="profile-username">@loading</p>
+                                <p id="profile-bio">Loading bio...</p>
+                                <div class="profile-stats">
+                                    <div class="stat">
+                                        <span class="stat-number" id="profile-posts">0</span>
+                                        <span class="stat-label">Posts</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-number" id="profile-followers">0</span>
+                                        <span class="stat-label">Followers</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-number" id="profile-following">0</span>
+                                        <span class="stat-label">Following</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Comments Modal -->
+    <div class="modal" id="comments-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>Comments</h3>
+                <button class="modal-close" id="comments-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="comments-container" id="comments-container">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading comments...</span>
+                    </div>
+                </div>
+                <div class="add-comment">
+                    <textarea placeholder="Write a comment..." id="comment-content"></textarea>
+                    <button class="btn btn-primary" id="comment-submit">Comment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error/Success Messages -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
